@@ -1,0 +1,13 @@
+#! /bin/sh
+tag=1.85.0
+
+echo "*** building tag $tag"
+
+img=mcluseau/rust:$tag
+
+docker build --network host -t $img --build-arg tag=${tag} . &&
+docker push $img
+
+git commit -am "version $tag"
+git tag -am $tag $tag
+
