@@ -1,5 +1,5 @@
 #! /bin/sh
-tag=1.86.0
+tag=1.87.0
 
 echo "*** building tag $tag"
 
