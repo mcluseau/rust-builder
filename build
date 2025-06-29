@@ -5,7 +5,7 @@ echo "*** building tag $tag"
 
 img=mcluseau/rust:$tag
 
-docker build --network host -t $img --build-arg tag=${tag} . &&
+docker build --pull --network host -t $img --build-arg tag=${tag} . &&
 docker push $img
 
 git commit -am "version $tag"
