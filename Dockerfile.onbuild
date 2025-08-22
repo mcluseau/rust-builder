@@ -1,0 +1,13 @@
+
+onbuild copy alpine-deps* .
+onbuild run if [ -e alpine-deps ]; then apk add --no-cache $(<alpine-deps); fi
+
+onbuild copy . /src
+onbuild workdir /src
+
+onbuild run \
+  --mount=type=ssh \
+  --mount=type=cache,id=rust-alpine-registry,target=/usr/local/cargo/registry \
+  --mount=type=cache,id=rust-alpine-target,sharing=private,target=/src/target \
+  cargo install --path . --root /dist
+

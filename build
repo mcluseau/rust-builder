@@ -1,11 +1,17 @@
-#! /bin/sh
+#! /bin/bash
 tag=1.89.0
 
 echo "*** building tag $tag"
 
+set -ex
 img=mcluseau/rust:$tag
 
 docker build --pull --network host -t $img --build-arg tag=${tag} . &&
+docker push $img
+
+cat Dockerfile Dockerfile.onbuild >Dockerfile.tmp
+img=$img-onbuild
+docker build --pull --network host -t $img --build-arg tag=${tag} . --file Dockerfile.tmp &&
 docker push $img
 
 git commit -am "version $tag"
