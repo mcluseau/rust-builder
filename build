@@ -6,11 +6,13 @@ echo "*** building tag $tag"
 set -ex
 img=mcluseau/rust:$tag
 
-docker build --pull --push --network host -t $img --build-arg tag=${tag} .
+docker build --pull --push \
+    --platform=linux/amd64,linux/arm64 \
+    --network host -t $img --build-arg tag=${tag} .
 
 cat Dockerfile Dockerfile.onbuild >Dockerfile.tmp
 img=$img-onbuild
-docker build --push \
+docker build --pull --push \
     --platform=linux/amd64,linux/arm64 \
     --network host -t $img --build-arg tag=${tag} . --file Dockerfile.tmp
 
