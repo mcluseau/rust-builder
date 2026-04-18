@@ -1,5 +1,5 @@
 #! /bin/bash
-tag=1.94.1
+tag=1.95.0
 
 echo "*** building tag $tag"
 
